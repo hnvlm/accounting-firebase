@@ -2,8 +2,9 @@ import React, {useRef, useState} from 'react';
 import { handleSubmit } from './firebase/BasicOperations';
 import { getDocument, getCollection } from './firebase/Get';
 
-// Const and Data
+// Const and Components
 import { collections } from './const/FirebaseConsts';
+import CollectionGrid from './components/grids/CollectionGrid';
 
 // MUI
 import { styled } from '@mui/material/styles';
@@ -12,7 +13,6 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import {Button, ButtonGroup, TextField}  from '@mui/material';
-import { DataGrid } from '@mui/x-data-grid';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -100,6 +100,12 @@ export default function App() {
                 <input type= "text" ref={dataRef} />
                 <button type = "submit">Save</button>
               </form>
+            </Paper>
+          </Grid>
+
+          <Grid item xs={12}>
+            <Paper>
+              <CollectionGrid collection={collections.test} />
             </Paper>
           </Grid>
         </Grid>
