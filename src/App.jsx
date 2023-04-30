@@ -1,4 +1,10 @@
-import * as React from 'react';
+import React, {useRef} from 'react';
+import { handleSubmit } from './firebase/BasicOperations';
+
+// Const and Data
+import { collections } from './const/FirebaseConsts';
+
+// MUI
 import { styled } from '@mui/material/styles';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -46,6 +52,18 @@ const rows = [
 ];
 
 export default function App() {
+  const dataRef = useRef()
+
+  const submithandler = (e) => {
+    e.preventDefault()
+    const data ={
+      name: dataRef.current.value
+    }
+    handleSubmit(dataRef.current.value, 'test_collection');
+    handleSubmit(collections.test, 'test', data);
+    dataRef.current.value = ""
+  }
+
   return (
     <Container maxWidth="md">
       <Box sx={{ flexGrow: 1 }}>
@@ -71,6 +89,15 @@ export default function App() {
                 rowsPerPageOptions={[5]}
                 checkboxSelection
               />
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper>
+              Something should be here
+              <form onSubmit={submithandler}>
+                <input type= "text" ref={dataRef} />
+                <button type = "submit">Save</button>
+              </form>
             </Paper>
           </Grid>
         </Grid>
