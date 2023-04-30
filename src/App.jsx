@@ -1,5 +1,6 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import { handleSubmit } from './firebase/BasicOperations';
+import { getDocument, getCollection } from './firebase/Get';
 
 // Const and Data
 import { collections } from './const/FirebaseConsts';
@@ -10,6 +11,7 @@ import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
+import {Button, ButtonGroup, TextField}  from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -64,31 +66,31 @@ export default function App() {
     dataRef.current.value = ""
   }
 
+  const [demoResponse, setDemoResponse] = useState('No request done yet')
+
+  const getSampleDocument = async()=>{
+    setDemoResponse(await getDocument());
+  };
+
+  const getSampleCollection = async()=>{
+    setDemoResponse(await getCollection());
+  };
+
   return (
     <Container maxWidth="md">
       <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={2}>
-          <Grid item xs={8}>
-            <Item>xs=8</Item>
-          </Grid>
-          <Grid item xs={4}>
-            <Item>xs=4</Item>
-          </Grid>
-          <Grid item xs={4}>
-            <Item>xs=4</Item>
-          </Grid>
-          <Grid item xs={8}>
-            <Item>xs=8</Item>
-          </Grid>
+          
           <Grid item xs={12}>
             <Paper>
-              <DataGrid
-                rows={rows}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-                checkboxSelection
+              <TextField
+                multiline
+                value={demoResponse}
               />
+              <ButtonGroup variant="contained">
+                <Button onClick={getSampleDocument}>Get Document</Button>
+                <Button onClick={getSampleCollection}>Get Collection</Button>
+              </ButtonGroup>
             </Paper>
           </Grid>
           <Grid item xs={12}>
